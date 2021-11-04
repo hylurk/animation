@@ -2,14 +2,16 @@
   <div class="wrapper">
     <div class="actions">
       <button @click="handleFlipAll">全部翻转</button>
+      <button @click="handleFlipQueue">依次翻转</button>
     </div>
     <div class="list">
       <div
-        v-for="(item, index) in Array(9).keys()"
-        :key="index"
+        v-for="item in listData"
+        :key="item.id"
         class="item"
-        :class="{ 'flip': flip}"
-        @click="flip = !flip"
+        :ref="`item_${item.id}`"
+        :class="{ 'flip': item.flip}"
+        @click="item.flip = !item.flip"
       >
         <div class="stick front" />
         <div class="stick back" />
@@ -23,14 +25,66 @@ import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   setup () {
-    const flip = ref(false)
+    const listData = ref([
+      {
+        id: 1,
+        flip: false
+      },
+      {
+        id: 2,
+        flip: false
+      },
+      {
+        id: 3,
+        flip: false
+      },
+      {
+        id: 4,
+        flip: false
+      },
+      {
+        id: 5,
+        flip: false
+      },
+      {
+        id: 6,
+        flip: false
+      },
+      {
+        id: 7,
+        flip: false
+      },
+      {
+        id: 8,
+        flip: false
+      },
+      {
+        id: 9,
+        flip: false
+      }
+    ])
     return {
-      flip
+      listData
     }
   },
   methods: {
+    // 全部一起翻转
     handleFlipAll () {
-      this.flip = !this.flip
+      this.listData.forEach(item => (item.flip = !item.flip))
+    },
+    // 依次翻转
+    async handleFlipQueue () {
+      for (let i = 0, len = this.listData.length; i < len; i++) {
+        await new Promise((resolve) => {
+          const node = this.$refs[`item_${this.listData[i].id}`] as HTMLElement
+          const fn = function () {
+            node.removeEventListener('transitionend', fn)
+            resolve(1)
+          }
+          node.addEventListener('transitionend', fn)
+          this.listData[i].flip = !this.listData[i].flip
+        })
+      }
     }
   }
 })
@@ -40,6 +94,21 @@ export default defineComponent({
 .wrapper {
   height: 100%;
   background-color: rgba($color: yellow, $alpha: 0.6);
+}
+.actions {
+  padding: 0 30px;
+  height: 80px;
+  line-height: 80px;
+  button {
+    margin: 0 10px;
+    padding: 0 10px;
+    height: 32px;
+    background: cornflowerblue;
+    border-radius: 3px;
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+  }
 }
 .list {
   display: flex;

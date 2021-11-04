@@ -7,3 +7,6 @@
 ## 项目说明
 
 本项目采用 Vue3.x + TS 为基础架构，每种动画对应各自的路由。
+
+- [翻牌效果](https://github.com/hylurk/animation/tree/main/src/views/fanpai)
+
