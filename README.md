@@ -1,24 +1,9 @@
-# animation
+# 动画效果素材
 
-## Project setup
-```
-yarn install
-```
+## 背景
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+工作中，当我们去做一些活动推广的页面的时候，难免会搞很多的小动画来丰富页面内容。本项目的主旨就是网罗各类常用的动画，以备大家不时之需。
 
-### Compiles and minifies for production
-```
-yarn build
-```
+## 项目说明
 
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+本项目采用 Vue3.x + TS 为基础架构，每种动画对应各自的路由。
